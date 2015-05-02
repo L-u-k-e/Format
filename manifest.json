@@ -1,0 +1,32 @@
+{
+    "manifest_version": 2,
+
+    "name": "Format",
+    "description": "Format allows you to format text in a variety of ways anywhere you type. Format also detects any available markdown tags that a website allows in its form data and places them just one click away!",
+    "version": "1.0",
+
+    "permissions": [
+        "<all_urls>",
+        "tabs",
+        "contextMenus",
+        "clipboardWrite",
+        "clipboardRead"
+        ],  
+
+    "background": {
+        "page": "background.html",
+        "persistent":false
+    },   
+    
+    "content_scripts":[
+    {
+        "matches":["<all_urls>"],
+        "js": ["content.js"]
+    },
+    {
+        "matches":["<all_urls>"],
+        "js":["replace.js"],
+        "all_frames":true      
+    }
+    ]
+}
