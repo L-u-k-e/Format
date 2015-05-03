@@ -6,7 +6,7 @@ var tag_titles= {
     "italic"        :   "Italicize",
     "underline"     :   "Underline",
     "strikethrough" :   "Strikethrough",
-    "blockquote"    :   "Block Quote",
+    "quote"         :   "Quote",
     "code"          :   "Code",
     "newline"       :   "Line Break",
     "horizontal"    :   "Horizontal Line",
@@ -14,7 +14,7 @@ var tag_titles= {
     "subscript"     :   "Sub-Script",
     "heading1"      :   "Heading 1",
     "heading2"      :   "Heading 2",
-    "heading3"      :   "Heading 3",
+    "heading3"      :   "Heading 3"
     
 };
 
@@ -43,21 +43,27 @@ function requestHandler(info, tab)
     {
         console.log(available_commands);
     }
+
     var mode=command[1];
     var new_text;
     if(mode==0)
     {
         new_text= command[0] + text + command[0];
     }
-    else if (mode==1)
+    else if(mode==1)
     {
         var close_tag = command[0].replace("<","</");
         new_text = command[0] + text + close_tag;
     }
-    else
+    else if(mode==2)
     {
         new_text = command[0];
     }
+    else if(mode==3)
+    {
+        new_text = command[0] + text;
+    }
+
     console.log(info.frameUrl);
     var result = {text:new_text, frame:info.frameUrl, href:hrefTop};
     sendToFront(tab.id, result);
