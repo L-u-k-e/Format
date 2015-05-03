@@ -14,7 +14,7 @@ var tags  = [
     },
 
 
-    { domain: ["stackoverflow","stackexchange"], 
+    { domain: ["stackoverflow","stackexchange","superuser","askubuntu","serverfault"], 
 
       bold:["<strong>",1], 
       italic:["<em>",1],

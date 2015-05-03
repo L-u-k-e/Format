@@ -1,8 +1,7 @@
 chrome.runtime.onMessage.addListener(handleRequest);
 
 function handleRequest(message)
-{
-    
+{ 
     if(correct_frame(message))
     {
         replaceSelectedText(message);

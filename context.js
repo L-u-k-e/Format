@@ -35,8 +35,14 @@ function requestHandler(info, tab)
 {  
     var text = (info.selectionText == undefined) ? " " : info.selectionText;
     var choice = info.menuItemId; 
-    
-    var command = available_commands[choice];
+    try{
+        var command = available_commands[choice];
+        console.log(available_commands)
+    }
+    catch(err)
+    {
+        console.log(available_commands);
+    }
     var mode=command[1];
     var new_text;
     if(mode==0)
@@ -116,6 +122,7 @@ function queryURL(message, sender)
 
 function createMenuItems(tags)
 {
+    //add available markdown formatting tags
     for(var command in tags)
     {
         chrome.contextMenus.create({
@@ -124,4 +131,7 @@ function createMenuItems(tags)
             "id":command
         });
     }
+
+    //add constant formatting options
+
 }
