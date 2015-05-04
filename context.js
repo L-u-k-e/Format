@@ -111,6 +111,7 @@ function queryURL(message, sender)
         query.onsuccess = function(event){
             if(query.result != undefined)
             {
+                console.log(queryURL);
                 delete query.result["domain"];
                 createMenuItems(query.result);
                 available_commands=query.result; 
