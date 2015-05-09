@@ -1,5 +1,5 @@
 var available_commands;
-var hrefTop;
+var hrefTop="something";
 var tag_titles= {
 
     "bold"          :   "Boldify",
@@ -63,7 +63,6 @@ function requestHandler(info, tab)
     {
         new_text = command[0] + text;
     }
-
     console.log(info.frameUrl);
     var result = {text:new_text, frame:info.frameUrl, href:hrefTop};
     sendToFront(tab.id, result);
@@ -91,7 +90,7 @@ function tabAdjustment(activeInfo)
         var queryStr = b[b.length-2];
         if(queryStr !=undefined)
         {
-            queryURL({host:queryStr});
+            queryURL({host:queryStr, href: tab.url});
         }
     }
     );
@@ -99,8 +98,11 @@ function tabAdjustment(activeInfo)
 
 function queryURL(message, sender)
 {
+    console.log("url queried");
     chrome.contextMenus.removeAll();
+    console.log(hrefTop);
     hrefTop=message.href;
+    console.log("just set hrefTop to:" + hrefTop)
 
     var openRequest = indexedDB.open("Tags",1);
     openRequest.onsuccess = function(event){
@@ -113,6 +115,7 @@ function queryURL(message, sender)
             {
                 console.log(queryURL);
                 delete query.result["domain"];
+                console.log(query.result);
                 createMenuItems(query.result);
                 available_commands=query.result; 
             }
@@ -140,5 +143,4 @@ function createMenuItems(tags)
     }
 
     //add constant formatting options
-
 }
