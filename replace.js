@@ -10,20 +10,16 @@ function handleRequest(message)
 
 function correct_frame(message)
 {
-    console.log(window.location.href);
-    console.log(message.href);
     var correct_frame=false;
     if((window.location.href == message.frame) || (window.location.href==message.href && message.frame==undefined))
     {
         correct_frame=true;
-        console.log("Frame found");
     }
     return correct_frame;
 }
 
 function replaceSelectedText(message) 
 {
-    console.log("replacing");
     var newText=message.text;
     var frameUrl=message.frame;
 

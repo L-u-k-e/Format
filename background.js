@@ -35,15 +35,7 @@ function requestHandler(info, tab)
 {  
     var text = (info.selectionText == undefined) ? " " : info.selectionText;
     var choice = info.menuItemId; 
-    try{
-        var command = available_commands[choice];
-        console.log(available_commands)
-    }
-    catch(err)
-    {
-        console.log(available_commands);
-    }
-
+    var command = available_commands[choice];
     var mode=command[1];
     var new_text;
     if(mode==0)
@@ -63,7 +55,6 @@ function requestHandler(info, tab)
     {
         new_text = command[0] + text;
     }
-    console.log(info.frameUrl);
     var result = {text:new_text, frame:info.frameUrl, href:hrefTop};
     sendToFront(tab.id, result);
 }
@@ -98,11 +89,8 @@ function tabAdjustment(activeInfo)
 
 function queryURL(message, sender)
 {
-    console.log("url queried");
     chrome.contextMenus.removeAll();
-    console.log(hrefTop);
     hrefTop=message.href;
-    console.log("just set hrefTop to:" + hrefTop)
 
     var openRequest = indexedDB.open("Tags",1);
     openRequest.onsuccess = function(event){
@@ -113,9 +101,7 @@ function queryURL(message, sender)
         query.onsuccess = function(event){
             if(query.result != undefined)
             {
-                console.log(queryURL);
                 delete query.result["domain"];
-                console.log(query.result);
                 createMenuItems(query.result);
                 available_commands=query.result; 
             }
