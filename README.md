@@ -5,7 +5,7 @@ If you visit a website that is registered in the Format database, shortcuts for 
 
 ![example](https://github.com/L-u-k-e/Format/blob/master/settings/img/example1.png)
 
-currently Supported Sites:
+*Currently Supported Sites:*
 
  - Youtube
  - StackExchange
