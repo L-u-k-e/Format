@@ -1,7 +1,7 @@
 const db_name="Tags";
 
 
-var request = window.indexedDB.open(db_name, 1);
+var request = window.indexedDB.open(db_name, CURRENT_DB_VERSION);
 var tags  = [
     //codes: 0 - markdown wrap tag
     //       1 - HTML wrap tag 

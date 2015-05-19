@@ -1,22 +1,5 @@
 var available_commands;
 var hrefTop="something";
-var tag_titles= {
-
-    "bold"          :   "Boldify",
-    "italic"        :   "Italicize",
-    "underline"     :   "Underline",
-    "strikethrough" :   "Strikethrough",
-    "quote"         :   "Quote",
-    "code"          :   "Code",
-    "newline"       :   "Line Break",
-    "horizontal"    :   "Horizontal Line",
-    "superscript"   :   "Super-Script",
-    "subscript"     :   "Sub-Script",
-    "heading1"      :   "Heading 1",
-    "heading2"      :   "Heading 2",
-    "heading3"      :   "Heading 3"
-    
-};
 
 
 
@@ -33,30 +16,35 @@ chrome.tabs.onActivated.addListener(tabAdjustment);
 
 function requestHandler(info, tab)
 {  
-    var text = (info.selectionText == undefined) ? " " : info.selectionText;
-    var choice = info.menuItemId; 
-    var command = available_commands[choice];
-    var mode=command[1];
-    var new_text;
-    if(mode==0)
-    {
-        new_text= command[0] + text + command[0];
-    }
-    else if(mode==1)
-    {
-        var close_tag = command[0].replace("<","</");
-        new_text = command[0] + text + close_tag;
-    }
-    else if(mode==2)
-    {
-        new_text = command[0];
-    }
-    else if(mode==3)
-    {
-        new_text = command[0] + text;
-    }
-    var result = {text:new_text, frame:info.frameUrl, href:hrefTop};
-    sendToFront(tab.id, result);
+    var choice= info.menuItemId;
+   /* if(choice.split('--')[0]=='constant'){
+        chrome.tabs.create({'url': "/settings.html" } );
+    }*/
+    //else{
+        var text = (info.selectionText == undefined) ? " " : info.selectionText;
+        var command = available_commands[choice];
+        var mode=command[1];
+        var new_text;
+        if(mode==0)
+        {
+            new_text= command[0] + text + command[0];
+        }
+        else if(mode==1)
+        {
+            var close_tag = command[0].replace("<","</");
+            new_text = command[0] + text + close_tag;
+        }
+        else if(mode==2)
+        {
+            new_text = command[0];
+        }
+        else if(mode==3)
+        {
+            new_text = command[0] + text;
+        }
+        var result = {text:new_text, frame:info.frameUrl, href:hrefTop};
+        sendToFront(tab.id, result);
+    //}
 }
 
 function sendToFront(tab, message)
@@ -90,9 +78,11 @@ function tabAdjustment(activeInfo)
 function queryURL(message, sender)
 {
     chrome.contextMenus.removeAll();
+   // createConstantMenuItems();
+    
     hrefTop=message.href;
 
-    var openRequest = indexedDB.open("Tags",1);
+    var openRequest = indexedDB.open("Tags",CURRENT_DB_VERSION);
     openRequest.onsuccess = function(event){
         var queryURL = message.host;
         var db = event.target.result;
@@ -103,12 +93,12 @@ function queryURL(message, sender)
             {
                 delete query.result["domain"];
                 createMenuItems(query.result);
-                available_commands=query.result; 
+                available_commands= query.result; 
             }
         };
 
         db.onerror = function(event){
-            console.log("an error bubbled up during a transaction.");
+            console.log("an error bubbled up driung a transaction.");
         };
     };
     openRequest.onerror = function(event){
@@ -127,6 +117,13 @@ function createMenuItems(tags)
             "id":command
         });
     }
+}
 
-    //add constant formatting options
+
+function createConstantMenuItems(){
+    chrome.contextMenus.create({
+        "title":"Settings",
+        "contexts":["all"],
+        "id":"constant--settings"
+    });
 }

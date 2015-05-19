@@ -40,6 +40,7 @@
         "128": "icons/pencil128.png",
         "256": "icons/pencil256.png",
         "512": "icons/pencil512.png"
+    },
 
-    }
+    "options_page":"settings/settings.html"
 }
