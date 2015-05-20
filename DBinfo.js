@@ -7,6 +7,7 @@ var tag_titles= {
     "underline"     :   "Underline",
     "strikethrough" :   "Strikethrough",
     "quote"         :   "Quote",
+    "blockquote"    :   "Blockquote",
     "code"          :   "Code",
     "newline"       :   "Line Break",
     "horizontal"    :   "Horizontal Line",

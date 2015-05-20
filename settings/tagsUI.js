@@ -65,7 +65,7 @@ function createDataUI(obj){
 		titles.appendChild(document.createElement('br'));
 		appendReadonlyTextInput(tags, obj[key][0]);
 		tags.appendChild(document.createElement('br'));
-		appendReadonlyTextInput(types, tag_types[obj[key][1]])
+		createTagTypeSelect(types, obj[key][1]);
 		types.appendChild(document.createElement('br'));
 	}
 	clearDiv(container);
@@ -113,4 +113,19 @@ function clearDiv(parent_element){
 	var cl= document.createElement('div');
 	cl.className= 'clear';
 	parent_element.appendChild(cl);
+}
+
+function createTagTypeSelect(parent_element, selected_index){
+	var sel= document.createElement('select');
+	parent_element.appendChild(sel);
+	sel.className="tag-type-select"
+	for(var i=0; i<tag_types.length; i++){
+		var opt= document.createElement('option');
+		sel.appendChild(opt);
+		opt.value=tag_types[i];
+		opt.textContent=tag_types[i];
+	}
+	sel.selectedIndex=selected_index;
+	//sel.disabled=true;
+
 }
