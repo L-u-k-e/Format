@@ -75,8 +75,7 @@ function createDataUI(obj){
 //takes a bunch of divs representing the individual dataUIs. 
 //wraps them up in one big container div and appends that to document.body 
 function appendDataUIs(divs){
-	var container= document.createElement('div');
-	document.body.appendChild(container);
+	var container= document.getElementById('UI-container');
 
 	for(var i=0; i<divs.length; i++){
 		container.appendChild(document.createElement('hr'));
