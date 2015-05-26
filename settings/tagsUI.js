@@ -1,5 +1,6 @@
 getAllObjects();
 
+
 //connect to indexedDB and get all the things. 
 function getAllObjects(callback){
 	var entries=[];
@@ -26,6 +27,126 @@ function getAllObjects(callback){
     };	
 }
 
+var dataUI = function(obj){
+	this.instances.push(this);
+	this.info= obj;
+	this.active= false;
+
+	container= document.createElement('div');
+	container.className= "dataUI";
+
+	this.appendTagTitle("Sites: ", container);
+	var domains= obj['domain'];
+	for(var i=0; i<domains.length; i++){
+		this.appendTextInput(domains[i], container);
+	} 
+	br(container);
+
+	var cols=document.createElement('div');
+	cols.id="column-wrapper";
+	container.appendChild(cols);
+
+	var titles= this.createColumn(cols);
+	var tags= this.createColumn(cols);
+	var types= this.createColumn(cols);
+	var edit= this.createColumn(cols);
+	edit.id="edit-column";
+	for(var key in obj){
+		if(key=="domain"){continue;}
+		this.appendTagTitle(tag_titles[key], titles);    br(titles);
+		this.appendTextInput(obj[key][0], tags);         br(tags);
+		this.appendTagTypeSelectBox(obj[key][1], types); br(types);
+	}
+
+	this.editButton= document.createElement('button');
+	this.editButton.appendChild(document.createTextNode('Edit'));
+	this.editButton.className='activate';
+	edit.appendChild(this.editButton);
+	
+	clearDiv(titles);
+	clearDiv(tags);
+	clearDiv(types);
+	clearDiv(edit);
+	clearDiv(cols);
+	clearDiv(container);
+
+	this.dbIndex=obj;
+	this.element= container;
+	container.object_=this;
+};
+
+dataUI.prototype= {
+	constructor: dataUI,
+	instances:[],
+
+	//appends a column <ul> to $parent_element
+    createColumn: function(parent_element){
+    	parent_element= parent_element || this.container;
+
+		var col= document.createElement('ul');
+		col.className= 'column';
+		parent_element.appendChild(col);
+		return col;
+	},
+
+	//appends a tag-title label styled so that it lines up with text inputs in the other columns
+    appendTagTitle: function(text, parent_element){
+    	parent_element= parent_element || this.container;
+
+	    var span= document.createElement('label');
+	    span.appendChild(document.createTextNode(text));
+	    span.className='tag_title'
+ 	    parent_element.appendChild(span);
+ 	    return span;
+    },
+
+    //appends text input to $parent element with $text as the place holder
+    appendTextInput: function(text, parent_element){
+    	parent_element= parent_element || this.container;
+
+		var inp=document.createElement('input');
+		inp.type='text';
+		inp.value=text;
+		parent_element.appendChild(inp);
+		inp.readOnly=true;
+		return inp;
+	},
+
+	//appends a tag-type select box to $parent_element with the specifed selected index
+	appendTagTypeSelectBox: function(selected_index, parent_element){
+		var sel= document.createElement('select');
+		parent_element.appendChild(sel);
+		sel.className="tag-type-select"
+		for(var i=0; i<tag_types.length; i++){
+			var opt= document.createElement('option');
+			sel.appendChild(opt);
+			opt.value=tag_types[i];
+			opt.textContent=tag_types[i];
+		}
+		sel.selectedIndex=selected_index;
+		sel.disabled=true;
+		return sel;
+	},
+
+	//toggles the state of the dataUI-- pass in true to activate, false to deactivate 
+	toggle: function(activate){
+		var selects= $(this.element).find('select');
+		for(var i=0; i<selects.length; i++){ selects[i].disabled= !activate};
+
+		var inputs= $(this.element).find('input');
+		for(var i=0; i<inputs.length; i++){ inputs[i].readOnly= !activate};
+
+		this.active=  activate;
+	},
+
+	//activates this dataUI and deactivates all other dataUIs
+	select: function(){
+		for(var i=0; i<this.instances.length; i++){
+			this.instances[i].toggle(false);
+		}
+		this.toggle(true);
+	}
+};
 
 
 //calls createDataUI on all the objects passed in.
@@ -33,44 +154,11 @@ function getAllObjects(callback){
 function createUIs(objs){
 	var dataUIs=[];
 	for(var i=0; i<objs.length; i++){
-		dataUIs.push(createDataUI(objs[i]));
+		dataUIs.push(new dataUI(objs[i]));
 	}
 	appendDataUIs(dataUIs);
 }
 
-//creates a UI (wrapped in a div) for an entry in the DB
-//returns the div wrapper, ready to be added to the DOM
-function createDataUI(obj){
-	var container= document.createElement('div');
-	container.className= "dataUI";
-
-	appendSpan(container, "Sites: ");
-
-	var domains= obj['domain'];
-	for(var i=0; i<domains.length; i++){
-		var domain_input= document.createElement('input');
-		domain_input.type= 'text';
-		domain_input.readOnly= true;
-		domain_input.value=domains[i];
-		container.appendChild(domain_input);
-	}
-
-	container.appendChild(document.createElement('br'));
-	var titles= createColumn(container);
-	var tags= createColumn(container);
-	var types= createColumn(container);
-	for(var key in obj){
-		if(key=="domain"){continue;}
-		appendSpan(titles, tag_titles[key]);
-		titles.appendChild(document.createElement('br'));
-		appendReadonlyTextInput(tags, obj[key][0]);
-		tags.appendChild(document.createElement('br'));
-		createTagTypeSelect(types, obj[key][1]);
-		types.appendChild(document.createElement('br'));
-	}
-	clearDiv(container);
-	return container;
-}
 
 //takes a bunch of divs representing the individual dataUIs. 
 //wraps them up in one big container div and appends that to document.body 
@@ -79,52 +167,22 @@ function appendDataUIs(divs){
 
 	for(var i=0; i<divs.length; i++){
 		container.appendChild(document.createElement('hr'));
-		container.appendChild(divs[i]);
+		container.appendChild(divs[i].element);
 	}
 }
 
-//create a span containing the provided text and append it to the provided element. 
-function appendSpan(parent_element, text){
-	var span= document.createElement('label');
-	span.appendChild(document.createTextNode(text));
-	span.className='tag_title'
- 	parent_element.appendChild(span);
- 	return span;
+//append $num <br> tags to $parent_element
+function br(parent_element, num){
+	num= num || 1;
+	for(var i=0; i<num; i++){
+		parent_element.appendChild(document.createElement('br'));
+	}
 }
 
-function appendReadonlyTextInput(parent_element, text){
-	var inp=document.createElement('input');
-	inp.type='text';
-	inp.readonly=true;
-	inp.value=text;
-	parent_element.appendChild(inp);
-	return inp;
-}
-
-function createColumn(parent_element){
-	var col= document.createElement('ul');
-	col.className= 'column';
-	parent_element.appendChild(col);
-	return col;
-}
-
+//append a div styled with 'clear:both' to $parent_element.
+//this forces $parent_element to extend far enough to encompass all floating elements
 function clearDiv(parent_element){
 	var cl= document.createElement('div');
 	cl.className= 'clear';
 	parent_element.appendChild(cl);
-}
-
-function createTagTypeSelect(parent_element, selected_index){
-	var sel= document.createElement('select');
-	parent_element.appendChild(sel);
-	sel.className="tag-type-select"
-	for(var i=0; i<tag_types.length; i++){
-		var opt= document.createElement('option');
-		sel.appendChild(opt);
-		opt.value=tag_types[i];
-		opt.textContent=tag_types[i];
-	}
-	sel.selectedIndex=selected_index;
-	//sel.disabled=true;
-
 }

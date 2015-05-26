@@ -11,8 +11,7 @@
 
 /* Default state **************************************************************/
 
-:-webkit-any(button,
-             input[type='button'],
+:-webkit-any(
              input[type='submit']):not(.custom-appearance):not(.link-button),
 select,
 input[type='checkbox'],
@@ -30,7 +29,7 @@ input[type='radio'] {
   text-shadow: 0 1px 0 rgb(240, 240, 240);
 }
 
-:-webkit-any(button,
+:-webkit-any(
              input[type='button'],
              input[type='submit']):not(.custom-appearance):not(.link-button),
 select {
@@ -42,7 +41,7 @@ select {
   padding-bottom: 1px;
 }
 
-:-webkit-any(button,
+:-webkit-any(
              input[type='button'],
              input[type='submit']):not(.custom-appearance):not(.link-button) {
   -webkit-padding-end: 10px;
@@ -148,7 +147,7 @@ input[type='radio']:checked::before {
     input[type='checkbox'],
     input[type='radio'],
     :-webkit-any(
-        button,
+        
         input[type='button'],
         input[type='submit']):not(.custom-appearance):not(.link-button)) {
   background-image: -webkit-linear-gradient(#f0f0f0, #f0f0f0 38%, #e0e0e0);
@@ -171,7 +170,7 @@ input[type='radio']:checked::before {
     input[type='checkbox'],
     input[type='radio'],
     :-webkit-any(
-        button,
+        
         input[type='button'],
         input[type='submit']):not(.custom-appearance):not(.link-button)) {
   background-image: -webkit-linear-gradient(#e7e7e7, #e7e7e7 38%, #d7d7d7);
@@ -188,7 +187,7 @@ input[type='radio']:checked::before {
 /* Disabled *******************************************************************/
 
 :disabled:-webkit-any(
-    button,
+    
     input[type='button'],
     input[type='submit']):not(.custom-appearance):not(.link-button),
 select:disabled {
@@ -231,7 +230,7 @@ input:disabled:-webkit-any([type='password'],
     input[type='url'],
     input:not([type]),
     :-webkit-any(
-         button,
+   
          input[type='button'],
          input[type='submit']):not(.custom-appearance):not(.link-button)) {
   /* OVERRIDE */

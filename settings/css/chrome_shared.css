@@ -140,8 +140,9 @@ hr{
 .column{
   list-style-type: none;
   float: left;
-  max-width:10%;
+  min-width:10%;
   display: inline-block;
+  -webkit-padding-start: 10px;
 }
 
 .dataUI{
@@ -161,4 +162,13 @@ hr{
   box-sizing:border-box;
   margin:0px;
   min-height: 2em;
+}
+
+#column-wrapper{
+  position:relative;
+}
+
+#edit-column{
+ height:100%;
+ position:relative;
 }

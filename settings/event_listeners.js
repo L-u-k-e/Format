@@ -1,7 +1,15 @@
 $(document).ready(function(){
 
-	$('#UI-container').on('click','.column', function(event){
-		alert('hi');
+	$('#UI-container').on('click', 'input', function(event){ //on('hover', '.dataUI, .dataUI input', function(event){
+		var UIcontainer= $(event.target).parents('.dataUI')[0];
+		if(!UIcontainer.object_.active){
+			UIcontainer.object_.editButton.focus();
+		}
 	});
+
+	$('#UI-container').on('click', '.activate', function(event){
+		var UIcontainer= $(event.target).parents('.dataUI')[0];
+		UIcontainer.object_.select();
+	})
 
 });
