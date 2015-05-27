@@ -57,6 +57,9 @@ select {
       -webkit-linear-gradient(#ededed, #ededed 38%, #dedede);
   background-position: right center;
   background-repeat: no-repeat;
+  padding: 2px;
+  min-height: 2em;
+  overflow: hidden;
 }
 
 html[dir='rtl'] select {
@@ -88,6 +91,7 @@ input[type='password'],
 input[type='search'],
 input[type='text'],
 input[type='url'],
+label,
 input:not([type]),
 textarea {
   border: 1px solid #bfbfbf;
@@ -98,9 +102,7 @@ textarea {
   margin: 0;
   /* Use min-height to accommodate addditional padding for touch as needed. */
   min-height: 2em;
-  padding: 3px;
-/* For better alignment between adjacent buttons and inputs. */
-  padding-bottom: 4px;
+  padding: 2px;
 }
 
 input[type='search'] {

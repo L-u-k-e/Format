@@ -154,13 +154,11 @@ hr{
 }
 
 .tag_title{
-  border: 0px solid #bfbfbf;
+  border: 1px solid transparent;
   display:inline-block;
-  padding-top: 3px;
-  padding-bottom: 4px;
-  box-sizing:border-box;
-  margin:0px;
   min-height: 2em;
+  padding:2px;
+  box-sizing:border-box;
 }
 
 #column-wrapper{
@@ -173,6 +171,7 @@ hr{
  margin-left:20px;
  text-align: left;
  vertical-align: middle;
+
  position:relative;
 }
 
