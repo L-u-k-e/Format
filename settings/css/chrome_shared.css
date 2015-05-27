@@ -147,7 +147,6 @@ hr{
 
 .dataUI{
   display:block;
-  min-width: 100%;
 }
 
 .clear{
@@ -165,10 +164,20 @@ hr{
 }
 
 #column-wrapper{
+  text-align: right;
   position:relative;
 }
 
 #edit-column{
  height:100%;
+ margin-left:20px;
+ text-align: left;
+ vertical-align: middle;
  position:relative;
+}
+
+#top-buttons{
+  display:block;
+  text-align: center;
+  width:50%;
 }

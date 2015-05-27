@@ -1,6 +1,5 @@
 getAllObjects();
 
-
 //connect to indexedDB and get all the things. 
 function getAllObjects(callback){
 	var entries=[];
