@@ -58,7 +58,8 @@ var dataUI = function(obj){
 	}
 
 	this.editButton= document.createElement('button');
-	this.editButton.appendChild(document.createTextNode('Edit'));
+	this.editButtonText=document.createTextNode('Edit');
+	this.editButton.appendChild(this.editButtonText);
 	this.editButton.className='activate';
 	edit.appendChild(this.editButton);
 	
@@ -134,6 +135,16 @@ dataUI.prototype= {
 
 		var inputs= $(this.element).find('input');
 		for(var i=0; i<inputs.length; i++){ inputs[i].readOnly= !activate};
+
+		if(activate){
+			this.editButtonText.nodeValue='Save';
+			this.editButton.className+=' save';
+		}
+		else{
+			this.editButtonText.nodeValue='Edit';
+			this.editButton.className=this.editButton.className.replace(/ .*/,'');
+			//this.save();
+		}
 
 		this.active=  activate;
 	},

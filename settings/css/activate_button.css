@@ -50,3 +50,10 @@
 	-webkit-animation: none;
 	animation: none;
 }
+
+.save{
+	
+	background: -webkit-linear-gradient(#0000FF, #000080);
+	background: linear-gradient(#0000FF, #000080);
+	box-shadow: 0 1px 0 #0000CD, 0 5px 0 #000073, 0 6px 6px rgba(0,0,0,0.6);
+}
