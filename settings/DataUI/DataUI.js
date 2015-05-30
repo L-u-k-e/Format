@@ -1,34 +1,5 @@
-getAllObjects();
-
-//connect to indexedDB and get all the things. 
-function getAllObjects(callback){
-	var entries=[];
-	var openRequest = indexedDB.open("Tags",CURRENT_DB_VERSION);
-    openRequest.onsuccess = function(event){
-        var db = event.target.result;
-        var objectStore = db.transaction("domains").objectStore("domains");
-        objectStore.openCursor().onsuccess= function(event){
-        	var cursor= event.target.result;
-        	if(cursor){
-        		entries.push(cursor.value);
-        		cursor.continue();
-        	}
-        	else{
-        		createUIs(entries);
-        	}
-        };
-        db.onerror = function(event){
-            console.log("an error bubbled up during a transaction.");
-        };
-    };
-    openRequest.onerror = function(event){
-        console.log("error opening DB");
-    };	
-}
-
-var dataUI = function(obj){
-	this.instances.push(this);
-	this.info= obj;
+var dataUI = function(obj, manager){
+	this.manager=manager;
 	this.active= false;
 
 	container= document.createElement('div');
@@ -39,6 +10,7 @@ var dataUI = function(obj){
 	for(var i=0; i<domains.length; i++){
 		this.appendTextInput(domains[i], container);
 	} 
+	this.domains=domains;
 	br(container);
 
 	var cols=document.createElement('div');
@@ -77,7 +49,6 @@ var dataUI = function(obj){
 
 dataUI.prototype= {
 	constructor: dataUI,
-	instances:[],
 
 	//appends a column <ul> to $parent_element
     createColumn: function(parent_element){
@@ -143,43 +114,30 @@ dataUI.prototype= {
 		else{
 			this.editButtonText.nodeValue='Edit';
 			this.editButton.className=this.editButton.className.replace(/ .*/,'');
-			//this.save();
+			if(this.active){
+				this.save();
+			}
 		}
 
 		this.active=  activate;
 	},
 
-	//activates this dataUI and deactivates all other dataUIs
-	select: function(){
-		for(var i=0; i<this.instances.length; i++){
-			this.instances[i].toggle(false);
+	gray: function(){
+		this.gray_div=document.createElement('div');
+		this.gray_div.className='gray-div';
+		this.element.appendChild(this.gray_div);
+	},
+
+	unGray: function(){
+		if(this.gray_div){
+			this.element.removeChild(this.gray_div);
 		}
-		this.toggle(true);
-	}
+	},
+
+	//gather all of the information into the UI info object and save it in the object store.
+	save: function(){
+	} 
 };
-
-
-//calls createDataUI on all the objects passed in.
-//adds the divs to the dom
-function createUIs(objs){
-	var dataUIs=[];
-	for(var i=0; i<objs.length; i++){
-		dataUIs.push(new dataUI(objs[i]));
-	}
-	appendDataUIs(dataUIs);
-}
-
-
-//takes a bunch of divs representing the individual dataUIs. 
-//wraps them up in one big container div and appends that to document.body 
-function appendDataUIs(divs){
-	var container= document.getElementById('UI-container');
-
-	for(var i=0; i<divs.length; i++){
-		container.appendChild(document.createElement('hr'));
-		container.appendChild(divs[i].element);
-	}
-}
 
 //append $num <br> tags to $parent_element
 function br(parent_element, num){

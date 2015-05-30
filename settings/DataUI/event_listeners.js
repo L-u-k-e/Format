@@ -9,7 +9,9 @@ $(document).ready(function(){
 
 	$('#UI-container').on('click', '.activate', function(event){
 		var UIcontainer= $(event.target).parents('.dataUI')[0];
-		UIcontainer.object_.select();
+		var UI= UIcontainer.object_;
+		console.log(UI);
+		UI.manager.selectUI(UI);
 	})
 
 });

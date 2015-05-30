@@ -147,6 +147,7 @@ hr{
 
 .dataUI{
   display:block;
+  position: relative;
 }
 
 .clear{
@@ -179,4 +180,12 @@ hr{
   display:block;
   text-align: center;
   width:50%;
+}
+
+.gray-div{
+  position: absolute;
+  top:-10px; left:-10px;
+  margin:0px; border:0px; padding:0px;
+  min-width: 102%; min-height: 100%;
+  background-color:#333; opacity:0.5;
 }
