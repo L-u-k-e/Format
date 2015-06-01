@@ -17,16 +17,16 @@ var dataUI = function(obj, manager){
 	cols.id="column-wrapper";
 	container.appendChild(cols);
 
-	var titles= this.createColumn(cols);
-	var tags= this.createColumn(cols);
-	var types= this.createColumn(cols);
+	this.titles= this.createColumn(cols);
+	this.tags= this.createColumn(cols);
+	this.types= this.createColumn(cols);
 	var edit= this.createColumn(cols);
 	edit.id="edit-column";
 	for(var key in obj){
 		if(key=="domain"){continue;}
-		this.appendTagTitle(tag_titles[key], titles);    br(titles);
-		this.appendTextInput(obj[key][0], tags);         br(tags);
-		this.appendTagTypeSelectBox(obj[key][1], types); br(types);
+		this.appendTagTitle(tag_titles[key], this.titles);    br(this.titles);
+		this.appendTextInput(obj[key][0], this.tags);         br(this.tags);
+		this.appendTagTypeSelectBox(obj[key][1], this.types); br(this.types);
 	}
 
 	this.editButton= document.createElement('button');
@@ -35,14 +35,14 @@ var dataUI = function(obj, manager){
 	this.editButton.className='activate';
 	edit.appendChild(this.editButton);
 	
-	clearDiv(titles);
-	clearDiv(tags);
-	clearDiv(types);
+	clearDiv(this.titles);
+	clearDiv(this.tags);
+	clearDiv(this.types);
 	clearDiv(edit);
 	clearDiv(cols);
 	clearDiv(container);
 
-	this.dbIndex=obj;
+	this.db_object=obj;
 	this.element= container;
 	container.object_=this;
 };
@@ -114,9 +114,6 @@ dataUI.prototype= {
 		else{
 			this.editButtonText.nodeValue='Edit';
 			this.editButton.className=this.editButton.className.replace(/ .*/,'');
-			if(this.active){
-				this.save();
-			}
 		}
 
 		this.active=  activate;
@@ -134,9 +131,17 @@ dataUI.prototype= {
 		}
 	},
 
-	//gather all of the information into the UI info object and save it in the object store.
 	save: function(){
-	} 
+		var titles= this.titles.children;
+		var tags= this.tags.children;
+		var types= this.types.children;
+		for(var i=0; i<tags.length; i++){
+
+			this.db_object[titles[i].nodeValue]= [tags[i].value, types[i].selectedIndex];
+		}
+		this.manager.updateNotice(this);
+	},
+
 };
 
 //append $num <br> tags to $parent_element

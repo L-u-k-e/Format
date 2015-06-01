@@ -58,6 +58,6 @@ request.onupgradeneeded = function(event) {
    for(var i in tags)
    {
        objectStore.add(tags[i]);
-       console.log("added " + tags[i]["domain"] + " to the DB");
+       console.log("added " + tags[i]["domain"] + " to the IDBObjectStore 'domains' in the IDBDatabase 'Tags' (Format)");
    }
 };

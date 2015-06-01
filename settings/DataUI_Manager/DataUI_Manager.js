@@ -1,15 +1,16 @@
-var DataUI_Manager= function(){
+var DataUI_Manager= function(db_name, db_version){
+	this.db_name= db_name;
+	this.db_version= db_version;
 	this.raw_objects=[];
 	this.UIs=[];
-
 };
 
 DataUI_Manager.prototype= {
 	constructor: DataUI_Manager,
 
-	createDataUIsFromDB: function(db_name, db_version){
+	createDataUIsFromDB: function(){
 		var instance=this;
-		var openRequest = indexedDB.open(db_name, db_version);
+		var openRequest = indexedDB.open(this.db_name, this.db_version);
 		openRequest.onsuccess = function(event){
 		    var db = event.target.result;
 		    var domains = db.transaction("domains").objectStore("domains");
@@ -57,11 +58,40 @@ DataUI_Manager.prototype= {
 		});
 	},
 
-	//call this from the UI when their $info property changes to update the DB accordingly
 	updateNotice: function(UI){
-		console.log('Notice Received');
-	}
+		var edit_approved=true;
+		//search for domain duplicates
+		this.UIs.forEach(function(UI){
+			if(UI.active){return;}
+			//...
+		});	
+
+		if(edit_approved){
+			//update the database
+			var manager= this;
+			var DBOpenRequest= window.indexedDB.open(this.db_name, this.db_version);
+			DBOpenRequest.onsuccess= function(event){
+				var db= DBOpenRequest.result;
+				var domains=db.transaction('domains', 'readwrite').objectStore('domains');
+				domains.openCursor().onsuccess= function(event){
+                    var cursor= event.target.result;
+		    	    if(cursor){
+		    	    	if(cursor.value.domain[0]==UI.db_object.domain[0]){
+		    	    		cursor.update(UI.db_object);
+		    	    	}
+		    		    cursor.continue();
+		    	    }
+		    	    else{
+						manager.UIs.forEach(function(UI){
+							if(UI.active){UI.toggle(false);}
+							else{UI.unGray();}
+						});
+					}
+				};
+			};
+		}
+	},
 };
 
-var manager= new DataUI_Manager();
-manager.createDataUIsFromDB("Tags",CURRENT_DB_VERSION);
+var manager= new DataUI_Manager("Tags", CURRENT_DB_VERSION);
+manager.createDataUIsFromDB();

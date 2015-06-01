@@ -98,7 +98,7 @@ function queryURL(message, sender)
         };
 
         db.onerror = function(event){
-            console.log("an error bubbled up driung a transaction.");
+            console.log("an error bubbled up during a transaction.");
         };
     };
     openRequest.onerror = function(event){
