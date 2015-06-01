@@ -54,9 +54,8 @@ request.onerror = function(event) {
 request.onupgradeneeded = function(event) {
    var db = event.target.result;
    var objectStore = db.createObjectStore("domains", {autoIncrement: true });
-   objectStore.createIndex("domain", "domain", { unique: true, multiEntry: true });
-   for(var i in tags)
-   {
+   objectStore.createIndex("domain", "domain", {multiEntry: true });
+   for(var i=0; i<tags.length; i++){
        objectStore.add(tags[i]);
        console.log("added " + tags[i]["domain"] + " to the IDBObjectStore 'domains' in the IDBDatabase 'Tags' (Format)");
    }

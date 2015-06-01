@@ -132,15 +132,15 @@ dataUI.prototype= {
 	},
 
 	save: function(){
-		var titles= this.titles.children;
-		var tags= this.tags.children;
-		var types= this.types.children;
+		var titles= $(this.titles).children('label');
+		var tags= $(this.tags).children('input');
+		var types= $(this.types).children('select');
 		for(var i=0; i<tags.length; i++){
-
-			this.db_object[titles[i].nodeValue]= [tags[i].value, types[i].selectedIndex];
+			this.db_object[inverted_tag_titles[titles[i].textContent]]= [tags[i].value, types[i].selectedIndex];
 		}
 		this.manager.updateNotice(this);
-	},
+	}
+
 
 };
 
