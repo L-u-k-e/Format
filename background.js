@@ -84,13 +84,12 @@ function queryURL(message, sender)
 
     var openRequest = indexedDB.open("Tags",CURRENT_DB_VERSION);
     openRequest.onsuccess = function(event){
-        var queryURL = message.host;
-        var db = event.target.result;
-        var objectStore = db.transaction("domains").objectStore("domains");
-        var query = objectStore.index("domain").get(queryURL)
+        var queryURL= message.host;
+        var db= event.target.result;
+        var object_store= db.transaction("domains").objectStore("domains");
+        var query= object_store.index("domain").get(queryURL);    
         query.onsuccess = function(event){
-            if(query.result != undefined)
-            {
+            if(query.result != undefined){
                 delete query.result["domain"];
                 createMenuItems(query.result);
                 available_commands= query.result; 

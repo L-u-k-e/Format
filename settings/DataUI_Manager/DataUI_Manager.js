@@ -17,7 +17,6 @@ DataUI_Manager.prototype= {
 		    domains.openCursor().onsuccess= function(event){
 		    	var cursor= event.target.result;
 		    	if(cursor){
-
 		    		instance.raw_objects.push(cursor.value);
 		    		cursor.continue();
 		    	}
@@ -71,22 +70,15 @@ DataUI_Manager.prototype= {
 			var manager= this;
 			var DBOpenRequest= window.indexedDB.open(this.db_name, this.db_version);
 			DBOpenRequest.onsuccess= function(event){
-				var db= DBOpenRequest.result;
+				var db= event.target.result;
 				var domains=db.transaction('domains', 'readwrite').objectStore('domains');
-				domains.openCursor().onsuccess= function(event){
-                    var cursor= event.target.result;
-		    	    if(cursor){
-		    	    	if(cursor.value.domain[0]==UI.db_object.domain[0]){
-		    	    		cursor.update(UI.db_object);
-		    	    	}
-		    		    cursor.continue();
-		    	    }
-		    	    else{
-						manager.UIs.forEach(function(UI){
-							if(UI.active){UI.toggle(false);}
-							else{UI.unGray();}
-						});
-					}
+				console.log(UI.db_object);
+				var overwrite= domains.put(UI.db_object);
+				overwrite.onsuccess= function(event){
+					manager.UIs.forEach(function(UI){
+						if(UI.active){UI.toggle(false);}
+						else{UI.unGray();}
+					});
 				};
 			};
 		}
