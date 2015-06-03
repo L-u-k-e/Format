@@ -23,7 +23,7 @@ var dataUI = function(obj, manager){
 	var edit= this.createColumn(cols);
 	edit.id="edit-column";
 	for(var key in obj){
-		if(key=="domain"){continue;}
+		if(key=="domain" || key=="id"){continue;}
 		this.appendTagTitle(tag_titles[key], this.titles);    br(this.titles);
 		this.appendTextInput(obj[key][0], this.tags);         br(this.tags);
 		this.appendTagTypeSelectBox(obj[key][1], this.types); br(this.types);

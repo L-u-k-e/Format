@@ -91,6 +91,7 @@ function queryURL(message, sender)
         query.onsuccess = function(event){
             if(query.result != undefined){
                 delete query.result["domain"];
+                delete query.result["id"];
                 createMenuItems(query.result);
                 available_commands= query.result; 
             }

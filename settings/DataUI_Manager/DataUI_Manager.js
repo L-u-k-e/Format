@@ -60,9 +60,14 @@ DataUI_Manager.prototype= {
 	updateNotice: function(UI){
 		var edit_approved=true;
 		//search for domain duplicates
-		this.UIs.forEach(function(UI){
-			if(UI.active){return;}
-			//...
+		this.UIs.forEach(function(ui){
+			if(ui.active){return;}
+			var intersection= UI.db_object.domain.filter(function(n){
+				return (ui.db_object.domain.indexOf(n) != -1);
+			});
+			if(intersection.length > 0){
+				edit_approved=false;
+			}
 		});	
 
 		if(edit_approved){
@@ -81,6 +86,9 @@ DataUI_Manager.prototype= {
 					});
 				};
 			};
+		}
+		else{
+			alert("Changes not saved. Duplicate domains were found.");
 		}
 	},
 };
