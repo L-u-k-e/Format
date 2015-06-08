@@ -5,6 +5,8 @@ var dataUI = function(obj, manager){
 	container= document.createElement('div');
 	container.className= "dataUI";
 
+	this.gray_div=document.createElement('div');
+
 	this.appendTagTitle("Sites: ", container);
 	var domains= obj['domain'];
 	for(var i=0; i<domains.length; i++){
@@ -42,6 +44,7 @@ var dataUI = function(obj, manager){
 	clearDiv(cols);
 	clearDiv(container);
 
+	this.original_db_object=obj;
 	this.db_object=obj;
 	this.element= container;
 	container.object_=this;
@@ -120,24 +123,29 @@ dataUI.prototype= {
 	},
 
 	gray: function(){
-		this.gray_div=document.createElement('div');
 		this.gray_div.className='gray-div';
 		this.element.appendChild(this.gray_div);
+		$(this.gray_div).fadeIn("slow");
 	},
 
 	unGray: function(){
-		if(this.gray_div){
-			this.element.removeChild(this.gray_div);
-		}
+		$(this.gray_div).fadeOut("slow");
 	},
 
 	save: function(){
+		var updated_domains=$(this.element).children('input');
+		this.db_object.domain=[];
+		for(var i=0; i<updated_domains.length; i++){
+			this.db_object.domain[i]=updated_domains[i].value;
+		}
+
 		var titles= $(this.titles).children('label');
 		var tags= $(this.tags).children('input');
 		var types= $(this.types).children('select');
 		for(var i=0; i<tags.length; i++){
 			this.db_object[inverted_tag_titles[titles[i].textContent]]= [tags[i].value, types[i].selectedIndex];
 		}
+		
 		this.manager.updateNotice(this);
 	}
 
