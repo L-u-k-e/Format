@@ -81,7 +81,13 @@ DataUI_Manager.prototype= {
 				var overwrite= domains.put(UI.db_object);
 				overwrite.onsuccess= function(event){
 					manager.UIs.forEach(function(UI){
-						if(UI.active){UI.toggle(false);}
+						if(UI.active){
+							UI.toggle(false);
+							$(UI.edit_success).fadeIn('slow');
+							setTimeout(function(){
+								$(UI.edit_success).fadeOut('slow');
+							},1000);
+						}
 						else{UI.unGray();}
 					});
 				};

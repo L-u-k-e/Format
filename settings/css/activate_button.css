@@ -1,9 +1,11 @@
 .activate
 {
+	position:absolute;
 	display: inline-block;
 	font-size: 1.1em;
 	font-weight: bold;
 	text-transform: uppercase;
+	top:0px;
 	padding: 10px 15px;
 	margin: auto;
 	color: #ccc;

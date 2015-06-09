@@ -37,6 +37,17 @@ var dataUI = function(obj, manager){
 	this.editButton.className='activate';
 	edit.appendChild(this.editButton);
 	
+	this.edit_success=document.createElement('img');
+	this.edit_success.src="img/check.png";
+	this.edit_success.className="edit-status-img";
+	edit.appendChild(this.edit_success);
+
+	this.edit_failure=document.createElement('img');
+	this.edit_failure.src="img/X.png";
+	this.edit_failure.className="edit-status-img";
+	edit.appendChild(this.edit_failure);
+
+
 	clearDiv(this.titles);
 	clearDiv(this.tags);
 	clearDiv(this.types);
@@ -125,11 +136,11 @@ dataUI.prototype= {
 	gray: function(){
 		this.gray_div.className='gray-div';
 		this.element.appendChild(this.gray_div);
-		$(this.gray_div).fadeIn("slow");
+		$(this.gray_div).fadeIn("fast");
 	},
 
 	unGray: function(){
-		$(this.gray_div).fadeOut("slow");
+		$(this.gray_div).fadeOut("fast");
 	},
 
 	save: function(){
@@ -145,11 +156,9 @@ dataUI.prototype= {
 		for(var i=0; i<tags.length; i++){
 			this.db_object[inverted_tag_titles[titles[i].textContent]]= [tags[i].value, types[i].selectedIndex];
 		}
-		
+
 		this.manager.updateNotice(this);
 	}
-
-
 };
 
 //append $num <br> tags to $parent_element
