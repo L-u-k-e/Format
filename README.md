@@ -8,5 +8,6 @@ If you visit a website that is registered in the Format database, shortcuts for 
 *Currently Supported Sites:*
 
  - Youtube
+ - Github (everything, but the file editor)
  - StackExchange
  - Reddit

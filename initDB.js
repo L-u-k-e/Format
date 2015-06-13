@@ -1,4 +1,4 @@
-const db_name="Tags";
+const db_name = "Tags";
 
 
 var request = window.indexedDB.open(db_name, CURRENT_DB_VERSION);
@@ -14,6 +14,20 @@ var tags  = [
       italic        : ["_",0] 
     },
 
+    { domain:["github"],
+
+      bold          : ["**", 0],
+      italic        : ["*",0],
+      strikethrough : ["~~",0],
+      quote         : [">",3],
+      code          : ["`",0],
+      heading1      : ["#",3],
+      heading2      : ["##",3],
+      heading3      : ["###",3],
+      heading4      : ["####",3],
+      heading5      : ["#####",3],
+      heading6      : ["######",3]
+    },
 
     { domain: ["stackexchange",
                "stackoverflow",

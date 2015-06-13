@@ -94,7 +94,11 @@ DataUI_Manager.prototype= {
 			};
 		}
 		else{
-			alert("Changes not saved. Duplicate domains were found.");
+			$(UI.edit_failure).fadeIn('slow',function(){
+				alert("Changes not saved. Duplicate domains were found.");
+			});
+			$(UI.edit_failure).fadeOut('slow');
+			
 		}
 	},
 };

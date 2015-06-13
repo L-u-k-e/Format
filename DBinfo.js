@@ -1,4 +1,4 @@
-var CURRENT_DB_VERSION= 1;
+var CURRENT_DB_VERSION = 1;
 
 var invert = function (obj) {
   var new_obj = {};
@@ -10,7 +10,7 @@ var invert = function (obj) {
   return new_obj;
 };
 
-var tag_titles= {
+var tag_titles = {
 
     "bold"          :   "Boldify",
     "italic"        :   "Italicize",
@@ -25,13 +25,16 @@ var tag_titles= {
     "subscript"     :   "Sub-Script",
     "heading1"      :   "Heading 1",
     "heading2"      :   "Heading 2",
-    "heading3"      :   "Heading 3"
+    "heading3"      :   "Heading 3",
+    "heading4"      :   "Heading 4",
+    "heading5"      :   "Heading 5",
+    "heading6"      :   "Heading 6"
     
 };
 
-var inverted_tag_titles= invert(tag_titles);
+var inverted_tag_titles = invert(tag_titles);
 
-var tag_types= [
+var tag_types = [
 	"Markdown -- wrap selected text",
     "HTML -- wrap selected text", 
     "HTML/Markdown -- overwrite selected text",
