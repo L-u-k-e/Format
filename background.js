@@ -77,7 +77,7 @@ function createMenuItems(tags){
 }
 
 // Listen for tab changes and query URL 
-//    If the tab is changes, but the user is just switching to an already 
+//    If the tab is changed, but the user is just switching to an already 
 //    loaded tab, then broadcast.js won't know to send a message because,
 //    from its prespective, window.location never changed.  
 chrome.tabs.onActivated.addListener(tabAdjust);
