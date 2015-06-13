@@ -36,7 +36,7 @@ var inverted_tag_titles = invert(tag_titles);
 
 var tag_types = [
 	"Markdown -- wrap selected text",
-    "HTML -- wrap selected text", 
-    "HTML/Markdown -- overwrite selected text",
-    "HTML/Markdown -- prefix selected text"
+  "HTML -- wrap selected text", 
+  "HTML/Markdown -- overwrite selected text",
+  "HTML/Markdown -- prefix selected text"
 ];

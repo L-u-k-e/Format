@@ -97,8 +97,7 @@ DataUI_Manager.prototype= {
 			$(UI.edit_failure).fadeIn('slow',function(){
 				alert("Changes not saved. Duplicate domains were found.");
 			});
-			$(UI.edit_failure).fadeOut('slow');
-			
+			$(UI.edit_failure).fadeOut('slow');		
 		}
 	},
 };

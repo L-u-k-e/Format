@@ -10,4 +10,5 @@ If you visit a website that is registered in the Format database, shortcuts for 
  - Youtube
  - Github (everything, but the file editor)
  - StackExchange
+ - Twitch
  - Reddit

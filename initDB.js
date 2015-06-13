@@ -49,6 +49,18 @@ var tags  = [
       horizontal    : ["<hr>",2]
     },
 
+    { domain: ["twitch"],
+
+      bold          : ["**", 0],
+      italic        : ["*", 0],
+      strikethrough : ["~~", 0],
+      superscript   : ["^", 3],
+      heading1      : ["#",3],
+      heading2      : ["##",3],
+      heading3      : ["###",3],
+      horizontal    : ["*****",2]
+    },
+
     { domain: ["reddit"],
 
       bold          : ["**",0],
