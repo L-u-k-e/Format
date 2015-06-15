@@ -1,0 +1,68 @@
+body{
+    text-align: center;
+    background:#EEE;
+}
+body>#content{
+    display:inline-block;
+    text-align: left;
+    max-width:60%;
+}
+
+.blink {
+    -webkit-animation-name: blinker;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: 8;
+    
+    animation-name: blinker;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: 8;
+}
+
+@-webkit-keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+
+input.quick-select[type='checkbox']{
+    transform: scale(1.5);
+    margin-left: 4em;
+
+    display: inline-block;
+}
+
+hr{
+    border-color: black;
+    opacity: 0.2;
+}
+
+table{
+    margin:auto;
+    font-size: 16px;
+    border: 1px solid black;
+    margin-bottom: 100px;
+}
+
+.domain-list{
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+td:nth-child(2){
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
+.object-display{
+    margin: auto;
+}

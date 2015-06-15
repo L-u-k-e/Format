@@ -1,14 +1,7 @@
-var CURRENT_DB_VERSION = 1;
+const DB_NAME = "Tags";
+const CURRENT_DB_VERSION = 16;
+const OBJECT_STORE_NAME = "domains";
 
-var invert = function (obj) {
-  var new_obj = {};
-  for (var prop in obj) {
-    if(obj.hasOwnProperty(prop)) {
-      new_obj[obj[prop]] = prop;
-    }
-  }
-  return new_obj;
-};
 
 var tag_titles = {
 
@@ -32,11 +25,22 @@ var tag_titles = {
     
 };
 
-var inverted_tag_titles = invert(tag_titles);
-
 var tag_types = [
 	"Markdown -- wrap selected text",
   "HTML -- wrap selected text", 
   "HTML/Markdown -- overwrite selected text",
   "HTML/Markdown -- prefix selected text"
 ];
+
+
+var invert = function (obj) {
+  var new_obj = {};
+  for (var prop in obj) {
+    if(obj.hasOwnProperty(prop)) {
+      new_obj[obj[prop]] = prop;
+    }
+  }
+  return new_obj;
+};
+
+var inverted_tag_titles = invert(tag_titles);

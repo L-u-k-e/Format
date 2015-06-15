@@ -40,7 +40,8 @@ var hrefTop;
 
 chrome.runtime.onMessage.addListener(queryURL);
 function queryURL(message, sender){
-    chrome.contextMenus.removeAll(function(){ 
+     if(message.type!='broadcast'){return;}
+        chrome.contextMenus.removeAll(function(){ 
         hrefTop = message.href;
         var openRequest = indexedDB.open("Tags",CURRENT_DB_VERSION);
         openRequest.onsuccess = function(event){
