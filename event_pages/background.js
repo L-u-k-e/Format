@@ -21,11 +21,11 @@
 
 chrome.runtime.onInstalled.addListener(initDB);
 function initDB(reason, previousVersion){  
-    var head = document.getElementsByTagName('head')[0];
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = 'initDB.js';
-    head.appendChild(script);
+  var head = document.getElementsByTagName('head')[0];
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src = 'initDB.js';
+  head.appendChild(script);
 }
 
 
@@ -39,17 +39,18 @@ var hrefTop;
 
 chrome.runtime.onMessage.addListener(queryURL);
 function queryURL(message, sender){
-     if(message.type!='broadcast'){return;}
-        chrome.contextMenus.removeAll(function(){ 
+ if(message.type!='broadcast'){ return; }
+    chrome.contextMenus.removeAll(function(){ 
         hrefTop = message.href;
         var openRequest = indexedDB.open(DB_NAME,CURRENT_DB_VERSION);
         openRequest.onsuccess = function(event){
             var queryURL = message.host;
             var db = event.target.result;
-            var object_store = db.transaction("domains").objectStore("domains");
+            var object_store = db.transaction(OBJECT_STORE_NAME).objectStore(OBJECT_STORE_NAME);
             var query = object_store.index("domain").get(queryURL);    
             query.onsuccess = function(event){
                 if(query.result){
+                    console.log(query.result);
                     delete query.result.domain;
                     delete query.result.id;
                     createMenuItems(query.result);
@@ -82,11 +83,12 @@ function createMenuItems(tags){
 //    from its prespective, window.location never changed.  
 chrome.tabs.onActivated.addListener(tabAdjust);
 function tabAdjust(activeInfo){
+    console.log("tab-swap");
     chrome.tabs.get(activeInfo.tabId, function(tab){
         var a = tab.url.split("://");
         var b = a[a.length-1].split("/")[0].split(".");
         var queryStr = b[b.length-2];
-        if(queryStr){ queryURL({host:queryStr, href: tab.url}); }
+        if(queryStr){ queryURL({type: 'broadcast', host:queryStr, href: tab.url}); }
     });
 }
 

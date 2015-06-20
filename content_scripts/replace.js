@@ -43,7 +43,6 @@ function replaceSelectedText(message) {
     if(eType == 'TEXTAREA' || eType == 'INPUT'){
         var start = e.selectionStart;
         var end = e.selectionEnd;
-        console.log(end);
         e.value = e.value.slice(0, start) + newText + e.value.substr(end);
     
         // Set cursor after selected text
