@@ -50,7 +50,6 @@ function queryURL(message, sender){
             var query = object_store.index("domain").get(queryURL);    
             query.onsuccess = function(event){
                 if(query.result){
-                    console.log(query.result);
                     delete query.result.domain;
                     delete query.result.id;
                     createMenuItems(query.result);
@@ -83,7 +82,6 @@ function createMenuItems(tags){
 //    from its prespective, window.location never changed.  
 chrome.tabs.onActivated.addListener(tabAdjust);
 function tabAdjust(activeInfo){
-    console.log("tab-swap");
     chrome.tabs.get(activeInfo.tabId, function(tab){
         var a = tab.url.split("://");
         var b = a[a.length-1].split("/")[0].split(".");
