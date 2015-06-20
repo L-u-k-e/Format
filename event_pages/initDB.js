@@ -81,41 +81,35 @@ request.onerror = function(event) {
   alert("Error opening the database");
 };
 
+request.onupgradeneeded = function(event){
+  var db = event.target.result;
+
+  if(event.oldVersion){ db.deleteObjectStore(OBJECT_STORE_NAME); }
+
+  var objectStore = db.createObjectStore(OBJECT_STORE_NAME, {keyPath: "id", autoIncrement: true});
+  objectStore.createIndex("domain", "domain", {multiEntry: true });
+  for(var i=0; i<os_data.length; i++){
+    objectStore.add(os_data[i]);
+    
+    console.log("Added " + os_data[i]["domain"] + " to the IDBObjectStore " + 
+    OBJECT_STORE_NAME + " in the IDBDatabase "+ DB_NAME +" (Format)");
+  }
+
+  generateUpdateNotification(event.oldVersion);
+};
 
 
-request.onupgradeneeded = upgrade;
-function upgrade(event){
-  
-  if(event.oldVersion){
-    chrome.tabs.create({url: 'settings/update.html'}, function(tab){   
-      var update_request = setInterval(function(){ 
-        chrome.tabs.sendMessage(tab.id, 
-          {type: 'upgrade request', new_data: os_data}, 
-          {}, 
-          function(response){ clearInterval(update_request); }
-        );
-      }, 1000);    
-    });
-  }
-  else{
-    var db = event.target.result;
-    var objectStore = db.createObjectStore(OBJECT_STORE_NAME, {keyPath: "id", autoIncrement: true});
-    objectStore.createIndex("domain", "domain", {multiEntry: true });
-    for(var i=0; i<os_data.length; i++){
-      objectStore.add(os_data[i]);
-      console.log("Added " + os_data[i]["domain"] + " to the IDBObjectStore " + 
-        OBJECT_STORE_NAME + " in the IDBDatabase "+ DB_NAME +" (Format)");
-    }
-  }
+
+function generateUpdateNotification(upgrade){
+  var message = {type: 'update'};
+  if(upgrade){ message.update_type = "upgrade"; } 
+  else { message.update_type = "fresh_install"; }
+
+  chrome.tabs.create({url: '/update/update.html'}, function(tab){   
+    var update_request = setInterval(function(){ 
+      chrome.tabs.sendMessage(tab.id, message, {}, function(response){
+        clearInterval(update_request); 
+      });
+    }, 300);    
+  });
 }
-
-
-
-
-
-
-
-chrome.runtime.onMessage.addListener(function(message){
-  if(message.type != 'upgrade'){return;}
-  custom_upgrade = message.object_store;
-});

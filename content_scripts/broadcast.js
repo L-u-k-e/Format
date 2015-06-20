@@ -1,5 +1,4 @@
 /* Author: Lucas Parzych
- * Email:  lukeepar@gmail.com
  * broadcast.js
  *
  * This script runs in the top frame of every page that is loaded.

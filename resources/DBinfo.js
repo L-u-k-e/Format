@@ -1,5 +1,5 @@
 const DB_NAME = "Tags";
-const CURRENT_DB_VERSION = 16;
+const CURRENT_DB_VERSION = 1;
 const OBJECT_STORE_NAME = "domains";
 
 

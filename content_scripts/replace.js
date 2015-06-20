@@ -1,5 +1,4 @@
 /* Author: Lucas Parzych
- * Email:  lukeepar@gmail.com
  * replace.js
  *
  * This script listens for messages from the event page and uses the informaion

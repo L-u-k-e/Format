@@ -1,5 +1,4 @@
 /* Author: Lucas Parzych
- * Email:  FoxMcCloud@gmail.com
  * background.js
  *
  * This is an event page that listens for messages from broadcast.js
@@ -43,7 +42,7 @@ function queryURL(message, sender){
      if(message.type!='broadcast'){return;}
         chrome.contextMenus.removeAll(function(){ 
         hrefTop = message.href;
-        var openRequest = indexedDB.open("Tags",CURRENT_DB_VERSION);
+        var openRequest = indexedDB.open(DB_NAME,CURRENT_DB_VERSION);
         openRequest.onsuccess = function(event){
             var queryURL = message.host;
             var db = event.target.result;
